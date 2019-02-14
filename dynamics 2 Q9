@@ -1,0 +1,36 @@
+clear all
+clc
+close all
+
+y0=0.05;
+dx = 1;
+
+y(1)=y0
+ye(1)=y0
+
+
+x = 0:dx:10;
+
+yx = y0*exp(-3*x);
+
+for i = 1: length(x)-1
+    ye(i+1) = y(i)-3*y(i)*dx;
+    
+    yp = y(i)-3*y(i)*dx;
+    yh(i+1) = y(i)+0.5*(-3*y(i)-3*yp)*dx;
+    
+    k1 = -3*y(i);
+    y1 = y(i)+k1*dx/2;
+    k2 = -3*y1;
+    y2 = y(i)+k2*dx/2;
+    k3 = -3*y2;
+    y3 = y(i)+k3*dx;
+    k4 = -3*y3;
+    yr(i+1) = y(i) + (dx/6)*(k1+2*k2+2*k3+k4);
+end
+
+
+plot(x,yx,x,ye,x,yh,x,yr)
+xlabel('x')
+ylabel('y')
+grid on
